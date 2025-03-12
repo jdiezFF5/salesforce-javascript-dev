@@ -352,3 +352,223 @@ d.getDate();
 d.getDay();
 d.setYear("2020"); //Imp lo que devuelve.
 
+//(12). Spread
+var x = [1, 2, 3, 4];
+var y = [...x]; //Nueva copian de la variable x.
+x.push(6);
+console.log(y); //De esta forma comprobamos que y sigue teniendo el valor original y no se le ha agregado 6.
+
+//Concatenación
+var x = [1, 2, 3, 4, 5];
+var y = [...x, "6"];
+
+//Pasar elementos de un array a una función como argumento independiente.
+function add (a, b, c) {
+    return a + b + c;
+}
+var args = [1, 2, 3, 4, 5];
+add(...args);   //Devuelve 6.
+
+//Convertir un string en array.
+[..."Jenni"];   //Devuelve un array donde cada elemento es una de las letras del string.
+
+//(13). Rest
+ function add(...args) {    //En este caso los ... transforman los parámetros en un array.
+    console.log(args);
+ }
+ add(1); //[1]
+ add(1, 2); //[1, 2]
+
+function xyz (x, y, ...z) {
+    console.log(x, ' ', y);
+    console.log(z);
+}
+xyz("hey", "hello", "wassup", "gmorning", "hi", "howdy"); //El segundo console log nos devuelve un array con el resto de elementos pasados por parámetro.
+
+
+//(14). Prototype y __proto__
+var o = Object.create(null);
+console.log(o); //No tiene propieades porque está inicialidado en null.
+
+var o = {id: 10, name: "Asdf"};
+console.log(o); //Nos muestra un objeto __proto__ junto con el resto de claves-valor.
+var a = ['Jhon'];
+console.log(a); //También tiene __proto__ que a su vez tiene otro dentro.
+
+function Entity (id, name) {
+    this.id = id;
+    this.name = name;
+}
+console.dir(Entity);
+
+var user1  = {
+    firstName: "Jennifer",
+    lastName: "Díez",
+    grade: "a",
+    getFullName: function() {
+        return this.firstName + ' ' + this.lastName;
+    }
+};
+
+var user2 = {
+    firstName: "Anais",
+    lastName: "VR",
+    grade: "b",
+    getFullName: function() {
+        return this.firstName + ' ' + this.lastName;
+    }
+};
+
+var Person  = function(firstName, lastName, role) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.role = role;
+    this.getFullName = function () {
+        return this.firstName + ' ' + this.lastName;
+    }
+}
+
+var user1 = new Person("Jenn", "D", "Co-Formadora");
+console.log(user1);
+//Vemos que el objeto tiene __proto__, pero crear esto con una función es redundante. Usamos prototypes:
+var Person  = function(firstName, lastName, role) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.role = role;
+} 
+
+Person.prototype.getFullName = function () {
+    return this.firstName + ' ' + this.lastName;
+}
+var user1 = new Person("Jenn", "D", "Co-Formadora");
+user1.getFullName(); //Vemos que la llamada al método funciona, se encuentra dentro de __proto__.
+
+//(15). Herencia en Objetos
+function Animal (name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+Animal.prototype.eats = function () {
+    console.log(this.name + 'está comiendo.');
+}
+
+function Dog (name, age, breed) {
+    // this.name = name;
+    // this.age = age;
+    Animal.call(this, name, age);
+    this.breed = breed;
+    this.logBreed = function () {
+        console.log(this.name + ' is a ' + this.breed);
+    }
+}
+
+var d1 = new Dog("Congui", 12, "Bulldog");
+d1.eats(); //TypeError, is not a function.
+
+Dog.prototype = Object.create(Animal.prototype);
+var d2 = new Dog("Galleta", 2, "Border Collie");
+console.log(d2); //Nos muestra el __proto__: Animal
+d2.eats(); //Función funciona.
+
+//(16). Clases y herencia de clases
+class Animal {
+    constructor (name, age) {
+        console.log(name + ' es un animal, ¡y lo acabamos de crear!');
+        this.name = name;
+        this.age = age;
+    }
+    eats() {
+        console.log(this.name + ' está comiendo.');
+    }
+}
+var animal1 = new Animal("Animal 1", 2);
+animal1;
+animal1.eats();
+
+class Dog {
+    constructor(breed) {
+        this.breed = breed;
+    }
+    logBreed () {
+        console.log(this.name + ' is a ' + this.breed);
+    }
+}
+
+var dog1 = new Dog("Bulldog");
+
+//Para heredar, utilizamos la palabra reservada extends.
+class Dog1 extends Animal{
+    constructor(name, age, breed) {
+        super(name, age);
+        this.breed = breed;
+    }
+    logBreed () {
+        console.log(this.name + ' is a ' + this.breed);
+    }
+}
+var dog2 = new Dog1("Perrete", "1", "Bulldog");
+dog2.eats();
+
+//(17). Decorators. Realizado en jsfiddle con Babel + JSX + No-library (pure JS)
+class Greet{
+    @readonly
+    greeting(){
+        return "Holi!";
+    }
+}
+var greet = new Greet();
+console.log("1", greet.greeting());
+
+function readonly(target, name, descriptor) {
+    descriptor.writable = false;
+    return descriptor;
+}
+
+greet.greeting = () => "Yay!";
+console.log("2", greet.greeting()); //Vemos que se imprime en orden.
+
+//(18). Modules exporting
+//De esta forma, en un archivo utils.js:
+export const programmingList = ["JS", "Java"];
+export const hello = () => "Hey!";
+export const bookDetail = {
+    name: "Salesforce",
+    author: "Unknown"
+}
+
+//También podemos expresarlo así:
+const programmingList = ["JS", "Java"];
+const hello = () => "Hey!";
+const bookDetail = {
+    name: "Salesforce",
+    author: "Unknown"
+}
+
+export {programmingList, hello, bookDetail};
+
+//Y en otro archivo, como index.js, lo importamos:
+import {programmingList, hello, bookDetail} from './utils.js';
+
+//O bien así:
+import * from './utils.js';
+
+//(20). Modules importing
+export default {
+    programmingList = ["JS", "Java"],
+    hello = () => "Hey!",
+    bookDetail = {
+        name: "Salesforce",
+        author: "Unknown"
+    }
+}
+
+//En el archivo que importa:
+import UTILS from './utils.js';
+class App extends Component {
+    render() {
+        console.log(UTILS.programmingList);
+        console.log(UTILS.hello);
+        console.log(UTILS.bookDetail);
+    }
+}
