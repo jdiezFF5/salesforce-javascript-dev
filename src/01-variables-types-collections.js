@@ -1,6 +1,6 @@
 //(1). Variables
-var name;
-name;   //Undefined
+var myName;
+myName;   //Undefined
 var name = "JavaScript";
 console.log(name);; //"JavaScript"
 var Name = "JS";
@@ -130,6 +130,18 @@ Number(["22", "23"]); //NaN
 100 + 20 + undefined + "world"; //"NaNworld". Porque Number(undefined) devuelve NaN.
 var x = {};
 x + "hey"; //"[object Object]hey"
+//Ejemplos de clase.
+undefined + "100" + 20 + "world"; //'undefined10020world'
+undefined + "100" + 20 + 5 + "world"; //undefined100205world'
+"home" + undefined + "100" + 20 + 5 + "world"; //'homeundefined100205world'
+8 + 2 + "home" + "100" + 20 + 5 + "world"; //'10home100205world'
+8 + 2 + "home" + "100" + (20 + 5) + "world"; //'10home10025world' ¡Importante! Hace la suma de 20 + 5.
+8 + 2 + "home" + "100" + 20 * 5 + "world"; //'10home100100world' ¡Importante! Hace la multiplicación de 20 + 5.
+8 + 2 + "home" + "100" + 20 / 5 + "world"; //'10home1004world' ¡Importante! Hace la división de 20 + 5.
+8 + 2 + "home" + "100" + 20 / "5" + "world"; //'10home1004world' ¡Importante! Hace la división convirtiendo el valor del string "5" en Number.
+8 + 2 + "home" + "100" + 20 / "asdf" + "world"; //'10home100NaNworld'
+8 + 2 + "home" + "100" + 20 / "five" + "world"; //'10home100NaNworld'
+8 + 2 + "home" + "100" + (20 + "1") + "world"; //'10home100201world'
 
 //(9). Valores falsy
 Boolean(2); //true
