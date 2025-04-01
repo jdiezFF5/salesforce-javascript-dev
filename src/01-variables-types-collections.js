@@ -203,3 +203,16 @@ const userDetail = {
     name: "Jennifer"
 }
 userDetail.name = "JavaScript"; //En este caso no lanza error debido a que estamos actualizando la referencia.
+
+let texto = "  ¡Hola Mundo!  ";
+texto.toLowerCase();  // "  ¡hola mundo!  "
+texto.toUpperCase();  // "  ¡HOLA MUNDO!  "
+texto.trim();         // "¡Hola Mundo!"
+texto.trimStart();    // "¡Hola Mundo!  "
+texto.trimEnd();      // "  ¡Hola Mundo!"
+texto.substr(3, 4);   // "Hola"
+texto.substring(3, 7); // "Hola"
+texto.replace("Mundo", "JavaScript"); // "  ¡Hola JavaScript!  "
+texto.indexOf("Mundo");  // 7
+texto.includes("Hola");  // true
+texto.split(" ");  // ["", "", "¡Hola", "Mundo!", "", ""]
