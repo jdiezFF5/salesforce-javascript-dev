@@ -9,7 +9,7 @@ var x = ["a", "b", "c", "d"];
 x.push("e"); //5
 x.pop(); //"e"
 x.shift(); //"a" | En este punto el array contendrá ["b", "c", "d"]
-x.unshift
+x.unshift('1'); //Devuelve el nuevo tamaño del array. Se añade el elemento al inicio.
 x.reverse();
 x.splice(1, 1); //Elimina 'b'.
 x.splice(1, 0, "hurray");

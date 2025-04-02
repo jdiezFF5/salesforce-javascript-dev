@@ -106,7 +106,8 @@ typeof function(){} //"function".
 //que puieden asignarse a variables, pasarse como argumentos, retornarse desde otras funciones y tener propiedades y objetos como obj normales.
 //Sin embargo al hacer el typeof devuelve "function" porque se consideran un tipo de obj con un propósito específico, que es ejecutar código.
 
-typeof Date();  //"object". En este caso sí es un obj, como habíamos visto.
+typeof Date(); //'string' porque devuelve un string con la fecha actual: "Tue Apr 02 2025 10:15:00 GMT+0000 (Coordinated Universal Time)"
+typeof new Date();  //"object". En este caso sí es un obj, como habíamos visto.
 
 //(8). Conversión de tipos
 String(23); //"23"
@@ -203,3 +204,16 @@ const userDetail = {
     name: "Jennifer"
 }
 userDetail.name = "JavaScript"; //En este caso no lanza error debido a que estamos actualizando la referencia.
+
+let texto = "  ¡Hola Mundo!  ";
+texto.toLowerCase();  // "  ¡hola mundo!  "
+texto.toUpperCase();  // "  ¡HOLA MUNDO!  "
+texto.trim();         // "¡Hola Mundo!"
+texto.trimStart();    // "¡Hola Mundo!  "
+texto.trimEnd();      // "  ¡Hola Mundo!"
+texto.substr(3, 4);   // "Hola"
+texto.substring(3, 7); // "Hola"
+texto.replace("Mundo", "JavaScript"); // "  ¡Hola JavaScript!  "
+texto.indexOf("Mundo");  // 7
+texto.includes("Hola");  // true
+texto.split(" ");  // ["", "", "¡Hola", "Mundo!", "", ""]
