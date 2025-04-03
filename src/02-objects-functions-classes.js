@@ -82,14 +82,17 @@ for(let i = 0; i < alphabets.length; i++) {
 }
 alphabets.forEach(function (currItem, index, actualArr) {
     console.log(currItem.name);
-    if(alphabets[i].name === "A") {
-        break;
+    console.log(index);
+    console.log(actualArr);
+    if(alphabets[index].name === "A") {
+        break;  //Error debido a que en los bucles forEach no se puede usar la sentencia break dado que no se permite detener la ejecución
+        //antes de terminar de recorrer todos los elementos.
     }
 });
 for(let alphabet of alphabets) {
     console.log(alphabet.name);
     if(alphabet.name === "A") {
-        break;
+        break;  //Aquí sí está permitido utilizar el break.
     }
 }
 let oldCar = {
@@ -122,14 +125,14 @@ function logColor () {
     let color = "blue";
     console.log(color);
 }
-logColor; //blue
+logColor(); //blue
 color; //Uncaught ReferenceError
 
 if(true) {
     let color = "pink";
     console.log(color);
 }
-console.log(color); //Uncaught ReferenceError
+color; //Uncaught ReferenceError
 
 var color = "blue";
 function returnSkyColor () {
@@ -139,6 +142,7 @@ returnSkyColor(); //"blue"
 
 //Scope pollution
 let num = 50;
+console.log(num);
 function logNum() {
     num = 100;
     console.log(num);
@@ -149,7 +153,7 @@ console.log(num); //Imprime dos veces 100, pues es una variable global.
 //(4). Hoisting
 console.log(hoist);
 var hoist = "Hello"; //undefined
-
+//Internamente JS hace esto, de ahí el undefined:
 var hoist;
 console.log(hoist);
 hoist = "Hello";
@@ -229,8 +233,8 @@ var person1 = {
     lastName: "Dev"
 };
 person.getFullName.call(person1);
-person.getFullName.call(person1, "A", "B");
-person.getFullName.apply(person1, ["A", "B"]);
+person.getFullName.call(person1, "A", "B"); //Al no recibir parámetros la función getFullName(), los valores A y B no se asignan.
+person.getFullName.apply(person1, ["A", "B"]);  //Lo importante de ambos métodos (call y apply) es que permiten cambiar el contexto de this.
 
 //(7). Arrow functions
 function abc() {
@@ -339,8 +343,8 @@ const newPerson  = {
 newPerson.name = "Anaïs";
 newPerson;
 Object.freeze(newPerson);
-newPerson.name = "Anaïs";
-newPerson;
+newPerson.name = "Jenn";
+newPerson;  //Vemos que no ha mutado.
 delete newPerson.name; //false
 
 //(11). Date y sus métodos
@@ -384,6 +388,18 @@ function xyz (x, y, ...z) {
     console.log(z);
 }
 xyz("hey", "hello", "wassup", "gmorning", "hi", "howdy"); //El segundo console log nos devuelve un array con el resto de elementos pasados por parámetro.
+
+//Ejemplo de rest, fuente: https://www.freecodecamp.org/espanol/news/operadores-rest-spread-de-javascript-cual-es-la-diferencia/
+// Usa rest para encerrar el resto de valores específicos proporcionados por el usuario en un arreglo:
+function miBio(primerNombre, apellido, ...otraInfo) { 
+    return otraInfo;
+}
+  
+// Invoca la función miBio pasando cinco argumentos a sus parámetros:
+miBio("Oluwatobi", "Sofela", "CodeSweetly", "Desarrollo Web", "Hombre");
+  
+// La invocación anterior devolverá:
+["CodeSweetly", "Desarrollo Web", "Hombre"]
 
 
 //(14). Prototype y __proto__
@@ -527,6 +543,25 @@ function readonly(target, name, descriptor) {
 
 greet.greeting = () => "Yay!";
 console.log("2", greet.greeting()); //Vemos que se imprime en orden.
+
+//Ejemplo de decorator, fuente: https://www.sitepoint.com/javascript-decorators-what-they-are/
+
+// A simple decorator
+function log(target, key, descriptor) {
+    console.log(`Logging ${key} function`);
+    return descriptor;
+}
+  
+class Example {
+    @log
+    greet() {
+      console.log("Hello, world!");
+    }
+}
+  
+const example = new Example();
+example.greet(); // Logs "Logging greet function" and "Hello, world!"
+
 
 //(18). Modules exporting
 //De esta forma, en un archivo utils.js:
