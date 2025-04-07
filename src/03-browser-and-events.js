@@ -2,7 +2,7 @@
 let elemId = document.getElementById("hello");
 console.log(elemId);
 
-let elemCls = document.getElementsByClassName("hello");
+let elemCls = document.getElementsByClassName("hi");
 console.log(elemCls);
 
 let elemTag = document.getElementsByTagName("div");
@@ -17,15 +17,15 @@ console.log(byClassAll.innerHTML);
 //(2). Moverse entre elementos.
 let bodyChild = document.querySelector("body").children; //Devuelve todos los hijos.
 let bodyFirstChild = document.querySelector("body").firstElementChild;
-console.log(bodyTag);
+console.log(bodyChild);
+console.log(bodyFirstChild);
 
 //(3). Manipulación de elementos.
-let manipulation = document.querySelector("#hello").innerHTML = "<div>Nuevo child<div>"; //Añadimos etiqueta div, como un nuevo child.
+let manipulation = document.querySelector("#hello").innerHTML = "<div>Nuevo child</div>"; //Añadimos etiqueta div, como un nuevo child.
 let secondManipulation = document.querySelector("#hello").innerText = "<div>Nuevo child<div>"; //Añade el texto tal cual, no renderiza nueva etiqueta.
-console.log(manipulation);
 
 //(4). Manipulación de atributos.
-let elem = document.querySelector("#hello").getAttribute("variant", "Success"); //Devuelve el interior del atributo. Si no lo encuentra devuelve null.
+let elem = document.querySelector("#hello").getAttribute("variant"); //Devuelve el interior del atributo. Si no lo encuentra devuelve null.
 console.log(elem);
 
 //(5). Manipulación de estilos.
@@ -42,21 +42,18 @@ function showAlert() {
 }
 
 //(7). HTML event handler mediante propiedad
-let btn = document.querySelector("#btn");
+let btn = document.querySelector("#btn2");
 btn.onclick = function () {
-    alert("Hey guys!");
+    alert("Hey guys! Soy otro botoncito.");
 }
 
 //(8). Event Listener: add y remove
-function showAlert() {
-    alert("Hey guys!");
-}
 let btn2 = document.querySelector('#btn2');
 btn2.addEventListener('click', showAlert);
 
 let removeBtn = document.querySelector('#btn-remove');
 removeBtn.addEventListener('click', function() {
-    btn.removeEventListener('click', showAlert);
+    btn2.removeEventListener('click', showAlert);
 })
 
 //(9). Eventos de carga y descarga de la página (Load y Unload)
@@ -75,8 +72,8 @@ window.addEventListener('beforeunload', (event) => {
 
 //(10). Flujo de eventos
 //Bubbling: al hacer click en el botón vemos que se propaga de forma ascendente, de manera que nos saltan todos los alerts.
-let btn = document.querySelector("#btn");
-btn.addEventListener ('click', function () {
+let btn4 = document.querySelector("#btn-custom");
+btn4.addEventListener ('click', function () {
     alert("Button clicked!");
 });
 let divWrapper = document.querySelector('#div_wrapper');
@@ -89,41 +86,41 @@ body.addEventListener ('click', function () {
 });
 
 //Capturing: al hacer click en el botón vemos que se propaga de forma descendente.
-let btn = document.querySelector("#btn");
-btn.addEventListener ('click', function () {
+let btn5 = document.querySelector("#btn-custom");
+btn5.addEventListener ('click', function () {
     alert("Button clicked!");
 });
-let divWrapper = document.querySelector('#div_wrapper');
-divWrapper.addEventListener ('click', function () {
+let divWrapper2 = document.querySelector('#div_wrapper');
+divWrapper2.addEventListener ('click', function () {
     alert("Wrapped clicked!");
-});
-let body = document.querySelector('#body');
-body.addEventListener ('click', function () {
+}, true);
+let body1 = document.querySelector('#body');
+body1.addEventListener ('click', function () {
     alert("Body clicked!");
 }, true);   //Lo definimos añadiendo esto al addEventListener.
 
 //(11). Custom Event
-let btn = document.querySelector("#btn");
+let btnCustom = document.querySelector("#btn-custom");
 let msg = document.querySelector("#msg");
-btn.addEventListener("click", function (e) {
+btnCustom.addEventListener("click", function (e) {
     let helloEvent = new CustomEvent("showMsg", {   //Creamos el custom event.
         detail: "Hello msg"
     })
-    btn.dispatchEvent(helloEvent); //Lo enlazamos con el elemento (trigger).
+    btnCustom.dispatchEvent(helloEvent); //Lo enlazamos con el elemento (trigger).
 });
-btn.addEventListener("showMsg", function () {
+btnCustom.addEventListener("showMsg", function (e) {
     console.log(e.detail);
     msg.innerText = e.detail;
 });
 
 //(12). Objeto Event
-let btn = document.querySelector("#btn");
-let body = document.querySelector('#body');
-btn.addEventListener("click", function (event) {
+let btn7 = document.querySelector("#btn");
+let body2 = document.querySelector('#body');
+btn7.addEventListener("click", function (event) {
     console.log(event); //Nos muestra todo el evento con sus props.
     event.stopPropagation();
 });
-body.addEventListener ('click', function (event) {
+body2.addEventListener ('click', function (event) {
     console.log("currentTarget", event.currentTarget);  //Devuelve la etiqueta body.
     console.log("target", event.target); //Devuelve la etiqueta button.
 });
