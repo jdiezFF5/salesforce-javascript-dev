@@ -26,15 +26,17 @@ try {
 } catch (error) {
     //Error handling.
     console.log("Soy el bloque catch");
+    console.log(error.message);
 } finally {
     //Siempre se ejecuta, independientemente de que se dé un error o no.
     //Este bloque es opcional.
     console.log("Soy el bloque finally");
 }
 
+//Error no capturado en bloque asíncrono:
 try {
     setTimeout(function () {
-        abd
+        abd; //Error al no estar definido, pero no es capturado por el bloque catch.
     }, 1000);
     console.log("Soy el bloque try");
 } catch (error) {
@@ -43,6 +45,20 @@ try {
     console.log(error.message);
     console.log(error.stack);
 }
+console.log("Soy el bloque fuera de try-catch");
+
+//Para capturar el error correctamente en código asíncrono, añadimos un try-catch dentro de la función:
+setTimeout(function () {
+    try {
+        abd; //Error al no estar definido.
+        console.log("Soy el bloque try");
+    } catch (error) {
+        console.log("Soy el bloque catch");
+    console.log(error.name);
+    console.log(error.message);
+    console.log(error.stack);
+    }
+}, 1000);
 console.log("Soy el bloque fuera de try-catch");
 
 //(5). throw
@@ -81,14 +97,15 @@ console.table([{name: "Jennifer", language: "JS"}, {name: "Anais", language: "Py
 
 //(9). console.time
 function acllApi() {
-    console.time('API TIMMER');
+    console.time('API TIMMER'); //API TIMMER (el label) es opcional.
     fetch('https://jsonplaceholder.typicode.com/todos/1')
-        .then(response => response. json())
+        .then(response => response.json())
         .then(json => {
             console.timeEnd('API TIMMER');
             console.table(json);
         })
 }
+acllApi();
 
 //(10). console.group
 var x = [{
@@ -103,17 +120,7 @@ var x = [{
 
 x.forEach(item => {
     console.group(item.name);
-    console.log(`A ${item.name} le gusta programar en ${item.lan}`);
-    console.log(`${item.lan} es un lenguaje de programación`);
+    console.log(`A ${item.name} le gusta programar en ${item.language}`);
+    console.log(`${item.language} es un lenguaje de programación`);
     console.groupEnd(item.name);
-})
-
-//(11). Debugger
-//En un html: <button id="btn">Click me!</button>
-let elem = document.querySelector('#btn');
-elem.addEventListener("click", (event) => {
-    console.log('Inicio');
-    console.log(event);
-    debugger;
-    console.log('Fin');
 })
