@@ -54,9 +54,9 @@ setTimeout(function () {
         console.log("Soy el bloque try");
     } catch (error) {
         console.log("Soy el bloque catch");
-    console.log(error.name);
-    console.log(error.message);
-    console.log(error.stack);
+        console.log(error.name);
+        console.log(error.message);
+        console.log(error.stack);
     }
 }, 1000);
 console.log("Soy el bloque fuera de try-catch");
