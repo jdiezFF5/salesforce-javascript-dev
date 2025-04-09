@@ -8,8 +8,8 @@ console.log(y);
 
 
 function task(message) {
-    let n = 10000000000;
-    while (n > 0){
+    let n = 10000000000;    
+    while (n > 0){  //Bloqueo del hilo principal por código síncrono pesado.
         n --;
     }
     console.log(message);
@@ -98,9 +98,9 @@ let p = new Promise((resolve, reject) => {
 p.then((result) => {
     console.log(result);
     return result * 2;
-}).then((result1) => {
-    console.log(result1);
-    return result1 * 3;
+}).then((result) => {
+    console.log(result);
+    return result * 3;
 });
 
 //Podemos añadir un bloque catch al encadenamiento.
